@@ -20,7 +20,9 @@ class JokesList extends React.Component
 
         //axiosWithAuth()
         axios
-        .get('http://localhost:9090/api/jokes')
+        .get('http://localhost:9090/api/jokes',{
+            withCredentials: true // required to get cookies to work properly
+           })
         .then(res => {
           console.log(res);
           this.setState({jokesList: res.data})

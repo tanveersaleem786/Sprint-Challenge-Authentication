@@ -24,11 +24,15 @@ class Login extends React.Component
    login = (e) => {
        e.preventDefault();
        axios
-       .post("http://localhost:9090/api/auth/login", this.state.credentials)
+       .post("http://localhost:9090/api/auth/login", this.state.credentials, {
+        withCredentials: true // required to get cookies to work properly
+       })
        .then(res => {
            console.log(res);
            //localStorage.setItem("username",res.data.payload);
-        //    this.props.history.push("/friendsList");
+           // this.props.history.push("/jokes");
+           localStorage.setItem("token",res.data.username);          
+           window.location.href = "/jokes";
        })
        .catch(err => {
            console.log(err);

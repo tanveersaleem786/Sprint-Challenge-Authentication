@@ -3,17 +3,16 @@ import {BrowserRouter as Router, Route, Link, Switch} from 'react-router-dom';
 import './App.css';
 
 import Login from './components/Login';
-// import FriendsList from './components/FriendsList';
 import Register from './components/Register';
 import JokesList from './components/JokesList';
-// import UpdateFriend from './components/UpdateFriend';
-//import Logout from './components/Logout';
 
-//import PrivateRoute from './components/PrivateRoute';
+
+import PrivateRoute from './components/PrivateRoute';
 
 
 function App() {
 
+ 
   const Logout = () => {
     localStorage.removeItem('token');  
     //props.history.push("/login");     
@@ -32,12 +31,16 @@ function App() {
           <li>
             <Link to="/jokes">Jokes</Link>
           </li>
+          <li>
+            <Link to="/logout" onClick={() => Logout()}>Logout</Link>
+          </li>
         </ul>
         <Switch>
                     
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
-          <Route path="/jokes" component={JokesList} />
+          <PrivateRoute exact path="/jokes" component={JokesList} />
+          
 
           <Route component={Login} />
           

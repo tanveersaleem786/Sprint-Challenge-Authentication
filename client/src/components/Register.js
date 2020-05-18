@@ -27,6 +27,7 @@ class Register extends React.Component
        .post("http://localhost:9090/api/auth/register", this.state.credentials)
        .then(res => {
            console.log(res);
+           window.location.href = "/login";
         //    localStorage.setItem("token",res.data.payload);
         //    this.props.history.push("/friendsList");
        })

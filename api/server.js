@@ -32,14 +32,18 @@ const sessionConfig = {
     )
 }
 
+
+
 server.use(helmet());
-server.use(cors());
+//server.use(cors());
 server.use(express.json());
+server.use(cors({ credentials: true, origin: "http://localhost:3000" })); // required to get cookies to work correctly in case of react client
 server.use(session(sessionConfig));
 
+
 server.use('/api/auth', authRouter);
-server.use('/api/jokes', jokesRouter);
-//server.use('/api/jokes', authenticate, jokesRouter);
+//server.use('/api/jokes', jokesRouter);
+server.use('/api/jokes', authenticate, jokesRouter);
 
 server.use((req, res) => {
     res.status(404).json({message: "Route not found"})
