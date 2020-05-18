@@ -5,15 +5,20 @@ const Users = require("../users/users-model.js");
 router.post('/register', async (req, res, next) => {
   
   try {
-    
-    const payload = {
-      username: req.body.username
+
+    const {username} = req.body
+    const user = await Users.findBy({username}).first()
+
+    if(user) {
+      res.status(409).json({"message": "Username is already taken"})
+    } else {
+              const payload = {
+                                  username:req.body.username,
+                                  password:req.body.password
+                              }          
+              const user = await Users.register(payload);
+              return res.status(201).json(user);
     }
-   
-    payload.password = await bcrypt.hashSync(req.body.password, 8);
-   
-   const user = await Users.register(payload);
-   return res.status(201).json(user);
    
   } catch(err) {
     next(err);

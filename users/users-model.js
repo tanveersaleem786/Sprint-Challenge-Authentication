@@ -1,6 +1,8 @@
+const bcrypt = require('bcryptjs');
 const db = require('../database/dbConfig.js');
 
 async function register(user) {
+   user.password = await bcrypt.hashSync(user.password, 8);
    const [id] = await db("users").insert(user);
    return findById(id);
 }
