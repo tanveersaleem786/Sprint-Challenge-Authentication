@@ -1,0 +1,6 @@
+ .unref is not a function to fix that issue.
+--------------------------------------------
+That can happen when jest is running in browser mode rather than node. To fix, add this to package.json:
+"jest": {  
+    "testEnvironment": "node" 
+  }   
